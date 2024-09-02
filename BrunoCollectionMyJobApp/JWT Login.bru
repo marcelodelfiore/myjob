@@ -1,0 +1,20 @@
+meta {
+  name: JWT Login
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/v1/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "recruiter": {
+      "email": "test@example.com",
+      "password": "password"
+    }
+  }
+}
