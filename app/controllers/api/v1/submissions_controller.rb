@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SubmissionsController < ApplicationController
+class Api::V1::SubmissionsController < ApplicationController
   before_action :set_submission, only: %i[show update destroy]
 
   def index
