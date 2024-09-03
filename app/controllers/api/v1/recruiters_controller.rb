@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Api::V1::RecruitersController < ApplicationController
+
+  include IsTokenValid
+
   before_action :set_recruiter, only: %i[show update destroy]
 
   def index

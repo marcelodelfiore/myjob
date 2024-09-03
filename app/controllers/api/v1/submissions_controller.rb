@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Api::V1::SubmissionsController < ApplicationController
+
+  include IsTokenValid
+
   before_action :set_submission, only: %i[show update destroy]
 
   def index

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Api::V1::JobsController < ApplicationController
+
+  include IsTokenValid
+
   before_action :set_job, only: %i[show update destroy]
 
   def index
