@@ -4,9 +4,11 @@ Rails.application.routes.draw do
       post 'auth/login', to: 'authentication#login'
       delete 'auth/logout', to: 'authentication#logout'
 
-      resources :jobs
-      resources :recruiters
-      resources :submissions
+      resources :recruiters do
+        resources :jobs do
+          resources :submissions
+        end
+      end
     end
   end
 end

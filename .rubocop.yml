@@ -12,5 +12,11 @@ RSpec:
 RSpecRails:
   Enabled: true
 
+Style/Documentation:
+  Enabled: false
+
+Rails/FindEach:
+  Enabled: false
+
 AllCops:
   SuggestExtensions: false
