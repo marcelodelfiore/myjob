@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class JobsController < ApplicationController
+class Api::V1::JobsController < ApplicationController
   before_action :set_job, only: %i[show update destroy]
 
   def index

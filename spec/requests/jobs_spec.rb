@@ -1,65 +1,72 @@
 # frozen_string_literal: true
 
+# rubocop:disable RSpec/MultipleExpectations
+
 require 'rails_helper'
 
-RSpec.describe "Jobs", type: :request do
+RSpec.describe 'Jobs', type: :request do
   let!(:recruiter) { create(:recruiter) }
   let!(:job) { create(:job, recruiter: recruiter) }
 
-  describe "GET /jobs/:id" do
-    it "returns the job" do
-      get job_path(job)
+  describe 'GET /recruiters/:recruiter_id/jobs' do
+    it 'returns a list of jobs' do
+      get api_v1_recruiter_jobs_path(recruiter_id: recruiter.id)
       expect(response).to have_http_status(:ok)
-      expect(json['id']).to eq(job.id)
+      expect(json.size).to eq(1)
     end
   end
 
-  describe "POST /jobs" do
+  describe 'GET /recruiters/:recruiter_id/jobs/:id' do
+    it 'returns a job' do
+      get api_v1_recruiter_job_path(recruiter_id: recruiter.id, id: job.id)
+      expect(response).to have_http_status(:ok)
+      expect(json['id']).to eq(job.id)
+      expect(json['title']).to eq(job.title)
+    end
+  end
+
+  describe 'POST /recruiters/:recruiter_id/jobs' do
     let(:valid_attributes) do
       {
         job: {
-          title: "Software Developer",
-          description: "Develops software.",
-          start_date: Date.today,
-          end_date: Date.today + 30,
-          status: "open",
-          skills: "Ruby, Rails",
+          title: 'New Job',
+          description: 'Job description',
           recruiter_id: recruiter.id
         }
       }
     end
 
-    it "creates a new job" do
-      expect {
-        post jobs_path, params: valid_attributes
-      }.to change(Job, :count).by(1)
+    it 'creates a job' do
+      post api_v1_recruiter_jobs_path(recruiter_id: recruiter.id), params: valid_attributes
       expect(response).to have_http_status(:created)
+      expect(json['title']).to eq('New Job')
+      expect(json['description']).to eq('Job description')
     end
   end
 
-  describe "PATCH /jobs/:id" do
+  describe 'PATCH /recruiters/:recruiter_id/jobs/:id' do
     let(:new_attributes) do
       {
         job: {
-          title: "Updated Job Title"
+          title: 'Updated Job Title'
         }
       }
     end
 
-    it "updates the job" do
-      patch job_path(job), params: new_attributes
+    it 'updates the job' do
+      patch api_v1_recruiter_job_path(recruiter_id: recruiter.id, id: job.id), params: new_attributes
       job.reload
-      expect(job.title).to eq("Updated Job Title")
+      expect(job.title).to eq('Updated Job Title')
       expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "DELETE /jobs/:id" do
-    it "deletes the job" do
-      expect {
-        delete job_path(job)
-      }.to change(Job, :count).by(-1)
+  describe 'DELETE /recruiters/:recruiter_id/jobs/:id' do
+    it 'deletes the job' do
+      delete api_v1_recruiter_job_path(recruiter_id: recruiter.id, id: job.id)
       expect(response).to have_http_status(:no_content)
+      expect { job.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
+# rubocop:enable RSpec/MultipleExpectations
