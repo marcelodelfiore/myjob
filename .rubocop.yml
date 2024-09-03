@@ -1,0 +1,16 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+
+Rails:
+  Enabled: true
+
+RSpec:
+  Enabled: true
+
+RSpecRails:
+  Enabled: true
+
+AllCops:
+  SuggestExtensions: false
