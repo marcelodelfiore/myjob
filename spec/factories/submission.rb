@@ -2,7 +2,11 @@
 
 FactoryBot.define do
   factory :submission do
-    email { "example@example.com" }
+    sequence(:name) { |n| "Submission #{n}" }
+    sequence(:email) { |n| "submission#{n}@example.com" }
+    mobile_phone { '123-456-7890' }
+    resume { 'resume.pdf' }
     association :job
   end
 end
+
