@@ -4,7 +4,7 @@ class Api::V1::RecruitersController < ApplicationController
   before_action :set_recruiter, only: %i[show update destroy]
 
   def index
-    @recruiters = Recruiter.all
+    @recruiters = Recruiter.page(params[:page]).per(params[:per_page])
     render json: @recruiters
   end
 

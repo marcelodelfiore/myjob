@@ -4,7 +4,7 @@ class Api::V1::JobsController < ApplicationController
   before_action :set_job, only: %i[show update destroy]
 
   def index
-    @jobs = Job.all
+    @jobs = Job.where(recruiter_id: params[:recruiter_id]).page(params[:page]).per(params[:per_page])
     render json: @jobs
   end
 

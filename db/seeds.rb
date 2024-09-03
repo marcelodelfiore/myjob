@@ -1,34 +1,38 @@
 # frozen_string_literal: true
 
-require 'faker'
+Recruiter.destroy_all
+Job.destroy_all
+Submission.destroy_all
 
 recruiter = Recruiter.create!(
-  name: 'John Doe',
-  email: 'john.doe@example.com',
-  password: 'password',
-  password_confirmation: 'password'
+  name: 'Recruiter Name',
+  email: 'recruiter@example.com',
+  password: 'password123'
 )
 
-5.times do
-  Job.create!(
-    title: Faker::Job.title,
-    description: Faker::Lorem.sentence(word_count: 20),
-    start_date: Faker::Date.backward(days: 30),
-    end_date: Faker::Date.forward(days: 60),
-    status: %w[open closed pending].sample,
-    skills: Faker::Job.key_skill,
+jobs = []
+10.times do |i|
+  jobs << Job.create!(
+    title: "Job Title #{i + 1}",
+    description: "Job Description #{i + 1}",
+    start_date: Date.today,
+    end_date: Date.today + 30.days,
+    status: 'open',
+    skills: 'Ruby, Rails',
     recruiter: recruiter
   )
 end
 
-Job.all.each do |job|
-  2.times do
+jobs.each do |job|
+  10.times do |i|
     Submission.create!(
-      name: Faker::Name.name,
-      email: Faker::Internet.unique.email,
-      mobile_phone: Faker::PhoneNumber.cell_phone_in_e164,
-      resume: Faker::Lorem.paragraph(sentence_count: 10),
+      name: "Applicant #{i + 1}",
+      email: "applicant#{job.id}_#{i + 1}@example.com",
+      mobile_phone: "123-456-7890",
+      resume: "resume_#{i + 1}.pdf",
       job: job
     )
   end
 end
+
+puts "Seed data created: #{Recruiter.count} recruiters, #{Job.count} jobs, #{Submission.count} submissions"

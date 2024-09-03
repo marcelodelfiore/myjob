@@ -4,7 +4,7 @@ class Api::V1::SubmissionsController < ApplicationController
   before_action :set_submission, only: %i[show update destroy]
 
   def index
-    @submissions = Submission.all
+    @submissions = Submission.where(job_id: params[:job_id]).page(params[:page]).per(params[:per_page])
     render json: @submissions
   end
 

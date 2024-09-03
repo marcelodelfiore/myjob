@@ -6,17 +6,25 @@ require 'rails_helper'
 
 RSpec.describe 'Jobs', type: :request do
   let!(:recruiter) { create(:recruiter) }
-  let!(:job) { create(:job, recruiter: recruiter) }
+  let!(:jobs) { create_list(:job, 10, recruiter: recruiter) }
+  let(:recruiter_id) { recruiter.id }
+  let(:job) { jobs.first }
 
-  describe 'GET /recruiters/:recruiter_id/jobs' do
+  describe 'GET /api/v1/recruiters/:recruiter_id/jobs' do
     it 'returns a list of jobs' do
       get api_v1_recruiter_jobs_path(recruiter_id: recruiter.id)
       expect(response).to have_http_status(:ok)
-      expect(json.size).to eq(1)
+      expect(json.size).to eq(10)
+    end
+
+    it 'paginates the jobs' do
+      get api_v1_recruiter_jobs_path(recruiter_id: recruiter.id, page: 1, per_page: 5)
+      expect(response).to have_http_status(:ok)
+      expect(json.size).to eq(5)
     end
   end
 
-  describe 'GET /recruiters/:recruiter_id/jobs/:id' do
+  describe 'GET /api/v1/recruiters/:recruiter_id/jobs/:id' do
     it 'returns a job' do
       get api_v1_recruiter_job_path(recruiter_id: recruiter.id, id: job.id)
       expect(response).to have_http_status(:ok)
@@ -25,7 +33,7 @@ RSpec.describe 'Jobs', type: :request do
     end
   end
 
-  describe 'POST /recruiters/:recruiter_id/jobs' do
+  describe 'POST /api/v1/recruiters/:recruiter_id/jobs' do
     let(:valid_attributes) do
       {
         job: {
@@ -44,7 +52,7 @@ RSpec.describe 'Jobs', type: :request do
     end
   end
 
-  describe 'PATCH /recruiters/:recruiter_id/jobs/:id' do
+  describe 'PATCH /api/v1/recruiters/:recruiter_id/jobs/:id' do
     let(:new_attributes) do
       {
         job: {
@@ -61,7 +69,7 @@ RSpec.describe 'Jobs', type: :request do
     end
   end
 
-  describe 'DELETE /recruiters/:recruiter_id/jobs/:id' do
+  describe 'DELETE /api/v1/recruiters/:recruiter_id/jobs/:id' do
     it 'deletes the job' do
       delete api_v1_recruiter_job_path(recruiter_id: recruiter.id, id: job.id)
       expect(response).to have_http_status(:no_content)
