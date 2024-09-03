@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :recruiter do
-    name { "John Doe" }
-    email { "john.doe@example.com" }
-    password { "password" }
-    password_confirmation { "password" }
+    sequence(:name) { |n| "Recruiter #{n}" }
+    sequence(:email) { |n| "recruiter#{n}@example.com" }
+    password { 'password' }
+    password_confirmation { 'password' }
   end
 end
