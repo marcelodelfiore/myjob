@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RecruitersController < ApplicationController
+class Api::V1::RecruitersController < ApplicationController
   before_action :set_recruiter, only: %i[show update destroy]
 
   def index
@@ -23,6 +23,8 @@ class RecruitersController < ApplicationController
   end
 
   def update
+    @recruiter = Recruiter.find(params[:id])
+
     if @recruiter.update(recruiter_params)
       render json: @recruiter
     else
