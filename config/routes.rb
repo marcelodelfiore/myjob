@@ -9,6 +9,13 @@ Rails.application.routes.draw do
           resources :submissions
         end
       end
+
+      namespace :publica do
+        resources :active_jobs, only: [:index]
+        resources :search, only: [:index]
+        resources :job_detail, only: [:show]
+        resources :new_submission, only: [:create]
+      end
     end
   end
 end

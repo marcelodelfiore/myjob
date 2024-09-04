@@ -5,5 +5,6 @@ FactoryBot.define do
     title { "Software Engineer" }
     description { "Responsible for developing software applications." }
     recruiter_id { 1 }
+    skills { 'Ruby' }
   end
 end

@@ -84,5 +84,4 @@ RSpec.describe 'Jobs', type: :request do
     end
   end
 end
-
 # rubocop:enable RSpec/MultipleExpectations
