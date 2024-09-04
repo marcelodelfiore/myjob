@@ -1,24 +1,66 @@
-# README
+# MyJob
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+MyJob is a Ruby on Rails application designed to manage job postings, submissions, and recruiters. It includes features for job management, search functionality, and user authentication.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+- **Job Management**: Create, read, update, and delete job postings.
+- **Submission Management**: Submit and manage applications for jobs.
+- **Recruiter Management**: Recruiters can create and manage their profiles.
+- **Search Functionality**: Search jobs by title, description, and skills.
+- **Pagination**: Paginate job listings and recruiter records.
+- **JWT Authentication**: Secure authentication for users.
 
-* System dependencies
+## Installation
 
-* Configuration
+### Prerequisites
 
-* Database creation
+- Ruby 2.7.2
+- Rails 6.0.6
+- PostgreSQL
+- Node.js (for JavaScript runtime)
+- Yarn (for managing JavaScript dependencies)
 
-* Database initialization
+### Setup
 
-* How to run the test suite
+1. **Clone the Repository**
 
-* Services (job queues, cache servers, search engines, etc.)
+   ```bash
+   git clone https://github.com/your-username/myjob.git
+   cd myjob
 
-* Deployment instructions
+2. **Install Dependencies**
+   ```bash
+    bundle install
+    yarn install
 
-* ...
+3. **Set the database**
+   ```bash
+   rails db:create
+   rails db:migrate
+   rails db:seed
+
+4. **Start the server**
+   ```bash
+   rails s
+
+5. **Usage - API Endpoints**
+    - Jobs
+        - GET /api/v1/jobs - List all jobs
+        - GET /api/v1/jobs/:id - Show job details
+        - POST /api/v1/jobs - Create a new job
+        - PATCH /api/v1/jobs/:id - Update a job
+        - DELETE /api/v1/jobs/:id - Delete a job
+
+    - Submissions
+        - POST /api/v1/submissions - Create a new submission
+
+    - Recruiters
+        - GET /api/v1/recruiters/:id - Show recruiter details
+        - POST /api/v1/recruiters - Create a new recruiter
+        - PATCH /api/v1/recruiters/:id - Update a recruiter
+        - DELETE /api/v1/recruiters/:id - Delete a recruiter
+
+    - Authentication
+        - POST /api/v1/auth/login - Login and receive a JWT token
+        - POST /api/v1/auth/logout - Logout
